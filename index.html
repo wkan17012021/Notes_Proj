@@ -10,10 +10,9 @@
       integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
       crossorigin="anonymous"
     />
-    <style></style>
-    <title>Notes App</title>
+    <title>Virtual KanBan</title>
   </head>
-  <body>
+  <body class="w-100">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">Navbar</a>
@@ -26,40 +25,7 @@
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdown"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Dropdown
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><hr class="dropdown-divider" /></li>
-                <li>
-                  <a class="dropdown-item" href="#">Something else here</a>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link disabled">Disabled</a>
-            </li>
-          </ul>
           <form class="d-flex">
             <input
               id="searchTxt"
@@ -80,15 +46,15 @@
       </div>
     </nav>
     <div class="container my-2">
-      <h1>Welcome to my NOTES App</h1>
-      <div class="card">       
-            <h5 class="card-title">Add a Title</h5>
+      <h1>Welcome to your virtual task tracker!</h1>
+      <div class="card p-3">       
+            <h5 class="card-title">Add the title to your Task / Job / Activity below</h5>
             <p class="card-text">
             <div class="form-floating">
               <input type="text" class="form-control"
               placeholder="Please add note title here"
               id="addTitle"></input>
-            <label for="addText">Please add title</label>
+            <label for="addText">“If you adopt only one agile practice let it be retrospectives. Everything else will follow.”</label>
             </div>
             </p>
             <h5 class="card-title">Add Comments</h5>
@@ -105,10 +71,10 @@
         </div>
       </div>
       <hr />
-      <h1 id="toggle_heading">Your Displayed Notes</h1>
+      <h1 id="toggle_heading" class="mx-3 text-center">KanBan Display</h1>
       <hr />
       <!--I want to populate the notes to JS using below ID = notes. Update the comments and autopopulate the note cards under the title Your displayed Notes-->
-      <div id="notes" class="container-fluid">
+      <div id="notes" class="container flex-column ms-0" style="width: 33%">
         <!--generate cards here. In order to identify the notes, i would add a class below.-->
         <!-- <div class="card row my-2 mx-2 noteCard" style="width: 18rem;">
                 <div class="card-body">

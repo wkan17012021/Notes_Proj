@@ -4,7 +4,7 @@ console.log("begin app");
 //we would add an event listener to 'Add Note' Button
 // When a user adds a note, add it to the local storage
 
-let addButton = document.getElementById("addBtn"); // capture the id with a variable
+const addButton = document.getElementById("addBtn"); // capture the id with a variable
 addButton.addEventListener("click", function () {
   //set the variable to an event listener
   let addtext = document.getElementById("addTxt"); //set a variable and assign it to the id of the text area.
@@ -53,11 +53,12 @@ function showNote() {
   // in the function below, the element is the content that the user types in i.e. their notes, and index represents a number starting from 0. So, when they click add note it would be 0 + 1 i.e. Note 1. When they click the add note button again, it will display Note 2.
   notesObj.forEach(function (element, index) {
     html += `
-            <div class="card row my-2 mx-0 noteCard" style="width: 18rem;">
+            <div class="card row my-2 mx-0 noteCard w-100 bg-light">
                 <div class="card-body">
                     <h5 id="example" class="card-title">${element.title}</h5>
                     <p class="card-text">${element.text}</p>
-                    <button id=" ${index}" class="btn btn-primary" onclick="deleteNote(this.id)">Delete Note</button>
+                    <button id=" ${index}" class="btn btn-danger" onclick="deleteNote(this.id)">Delete Note</button>
+                    <button id="push-to-progress" class="btn btn-warning" onclick="deleteNote(this.id)">Push to Progress</button>
                 </div>
             </div>
             `;
@@ -65,13 +66,13 @@ function showNote() {
 
   let notesElm = document.getElementById("notes"); //this is another variable to store the notes in
   if (notesElm.length != 0) {
-    notesElm.innerHTML = html;
+    notesElm.innerHTML = `<h3 id="to-do-heading" class="mx-2 text-center">Assigned / Backlog</h3>${html}`;
   } else {
     notesElm.innerHTML = "Nothing to show at this point";
   }
 }
 
-// FUNCTION TO DELETE NOTE
+// FUNCTION TO DELETE NOTE ***************************************
 function deleteNote(index) {
   console.log("deleting" + index);
   let confirmDel = confirm("Delete note?"); //getElementsByClassName("btn btn-primary").confirm("Delete note?");
@@ -89,6 +90,13 @@ function deleteNote(index) {
   }
 }
 
+const pushBtn = document.getElementById("push-to-progress");
+pushBtn.addEventListener('click', function() {
+  console.log("button clicked");
+})
+
+
+// ***********************
 // IF STATEMENT TO GET THE DISPLAYED NOTES TO SHOW/HIDE
 
 //function toCheckLocalStorage() {
