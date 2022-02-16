@@ -58,7 +58,7 @@ function showNote() {
                     <h5 id="example" class="card-title">${element.title}</h5>
                     <p class="card-text">${element.text}</p>
                     <button id=" ${index}" class="btn btn-danger" onclick="deleteNote(this.id)">Delete Note</button>
-                    <button id="push-to-progress" class="btn btn-warning" onclick="deleteNote(this.id)">Push to Progress</button>
+                    <button id="push-to-progress" class="btn btn-warning" onclick="handlePush(this.id)">Push to Progress</button>
                 </div>
             </div>
             `;
@@ -74,7 +74,7 @@ function showNote() {
 
 // FUNCTION TO DELETE NOTE ***************************************
 function deleteNote(index) {
-  console.log("deleting" + index);
+  // console.log("deleting" + index);
   let confirmDel = confirm("Delete note?"); //getElementsByClassName("btn btn-primary").confirm("Delete note?");
   let notes = localStorage.getItem("notes");
   if (confirmDel == true) {
@@ -90,11 +90,34 @@ function deleteNote(index) {
   }
 }
 
+// FUNCTION TO PUSH NOTE FROM BACKLOG TO PROGRESS COLUMN ******************
 const pushBtn = document.getElementById("push-to-progress");
-pushBtn.addEventListener('click', function() {
-  console.log("button clicked");
-})
 
+function handlePush(index) {
+  let notes = localStorage.getItem("notes");
+  notesObj = [];
+  notesObj = JSON.parse(notes);
+  // console.log(notesObj); grabs the entire JSON obj
+  let progressHtml = '';
+  notesObj.forEach(function (element, index) {
+    progressHtml += `
+            <div class="card row my-2 mx-0 noteCard w-100 bg-yellow">
+                <div class="card-body">
+                    <h5 id="card-progress-title" class="card-title">${element.title}</h5>
+                    <p class="card-text">${element.text}</p>
+                    <button id=" ${index}" class="btn btn-danger" onclick="deleteNote(this.id)">Delete Note</button>
+                    <button id="push-to-completion" class="btn btn-success" onclick="handleComplete(this.id)">Push to Completion</button>
+                </div>
+            </div>
+            `;
+  });
+  let notesElm = document.getElementById("progress-column");
+  if (notesElm.length != 0) {
+    notesElm.innerHTML += `<h3 id="in-progress-heading" class="mx-2 text-center">In Progress</h3>${progressHtml}`;
+  } else {
+    notesElm.innerHTML = "Nothing to show at this point";
+  }
+}
 
 // ***********************
 // IF STATEMENT TO GET THE DISPLAYED NOTES TO SHOW/HIDE
