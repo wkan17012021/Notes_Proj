@@ -53,12 +53,13 @@ function showNote() {
   // in the function below, the element is the content that the user types in i.e. their notes, and index represents a number starting from 0. So, when they click add note it would be 0 + 1 i.e. Note 1. When they click the add note button again, it will display Note 2.
   notesObj.forEach(function (element, index) {
     html += `
-            <div class="card row my-2 mx-0 noteCard w-100 bg-light">
+            <div class="card col align-items-start my-2 mx-0 noteCard w-33 bg-light">
                 <div class="card-body">
                     <h5 id="example" class="card-title">${element.title}</h5>
                     <p class="card-text">${element.text}</p>
-                    <button id=" ${index}" class="btn btn-danger" onclick="deleteNote(this.id)">Delete Note</button>
                     <button id="push-to-progress" class="btn btn-warning" onclick="handlePush(this.id)">Push to Progress</button>
+                    <button id=" ${index}" class="btn btn-danger" onclick="deleteNote(this.id)">Delete Note</button>
+                    
                 </div>
             </div>
             `;
@@ -101,7 +102,7 @@ function handlePush(index) {
   let progressHtml = '';
   notesObj.forEach(function (element, index) {
     progressHtml += `
-            <div class="card row my-2 mx-0 noteCard w-100 bg-yellow">
+            <div class="card col align-items-start my-2 mx-0 noteCard w-33 bg-yellow">
                 <div class="card-body">
                     <h5 id="card-progress-title" class="card-title">${element.title}</h5>
                     <p class="card-text">${element.text}</p>
