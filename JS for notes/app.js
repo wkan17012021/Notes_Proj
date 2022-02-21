@@ -66,6 +66,7 @@ function showNote() {
 
   let notesElm = document.getElementById("notes"); //this is another variable to store the notes in
   if (notesElm.length != 0) {
+    console.log(notesElm);
     notesElm.innerHTML = `<h3 id="to-do-heading" class="mx-2 text-center">Assigned / Backlog</h3>${html}`;
   } else {
     notesElm.innerHTML = "Nothing to show at this point";
@@ -95,26 +96,36 @@ function deleteNote(index) {
 const pushBtn = document.getElementById("push-to-progress");
 
 function handlePush(index) {
-  let notes = localStorage.getItem("notes");
-  notesObj = [];
-  notesObj = JSON.parse(notes);
-  let progressHtml = '';
-  progressHtml += `
+  let notesProg = localStorage.getItem("notes");
+  let notesProgObj = [];
+  notesProgObj = JSON.parse(notesProg);
+  // console.log(notesProgObj);
+  let progHtml = '';
+  progHtml += `
             <div class="card col align-items-start my-2 mx-0 noteCard w-33 bg-yellow">
                 <div class="card-body">
-                    <h5 id="card-progress-title" class="card-title">${notesObj[index].title}</h5>
-                    <p class="card-text">${notesObj[index].text}</p>
-                    <button id=" ${index}" class="btn btn-danger" onclick="deleteNote(this.id)">Delete Note</button>
+                    <h5 id="card-progress-title" class="card-title">${notesProgObj[index].title}</h5>
+                    <p class="card-text">${notesProgObj[index].text}</p>
                     <button id="${index}" class="btn btn-success" onclick="handleComplete(this.id)">Push to Completion</button>
+                    <button id=" ${index}" class="btn btn-danger" onclick="deleteNote(this.id)">Delete Note</button>
                 </div>
             </div>
             `;
-  let notesElm = document.getElementById("progress-column");
-  if (notesElm.length != 0) {
-    notesElm.innerHTML += `<h3 id="in-progress-heading" class="mx-2 text-center">In Progress</h3>${progressHtml}`;
+  let notesProgCol = document.getElementById("notes-progress");
+  if (notesProgCol.childElementCount == 0) {
+    // console.log(notesProgCol.childElementCount);
+    notesProgCol.innerHTML += `<h3 id="in-progress-heading" class="mx-2 text-center">In Progress</h3>${progHtml}`;
   } else {
-    notesElm.innerHTML = "Nothing to show at this point";
+    notesProgCol.innerHTML += `${progHtml}`;
+    // console.log(notesProgCol.childElementCount);
   }
+  // localStorage.setItem("prog-notes",)
+  let progNotesObj = {
+    title: notesProgObj[index].title,
+    text: notesProgObj[index].text
+  };
+  // console.log(progNotesObj);
+  localStorage.setItem("notes-progress", progNotesObj);
 }
 // ***********************
 // IF STATEMENT TO GET THE DISPLAYED NOTES TO SHOW/HIDE
