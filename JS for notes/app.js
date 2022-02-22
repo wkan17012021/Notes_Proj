@@ -71,22 +71,29 @@ function showNote() {
 
 showNote();
 
-////// FUNCTION TO DELETE NOTE //////
+
+////// Function to delete note //////
 
 function deleteNote(index) {
-  // console.log(index); // test
-  console.log("deleting" + index);
-  let confirmDel = confirm("Delete note?");
+  console.log(index); // test
+  // console.log("deleting" + index);
+  let confirmDel = true // confirm("Delete note?");
   let notes = localStorage.getItem("notes"); // grab the local storage notes
+  let progNotes = localStorage.getItem("notes-progress"); // grab the local storage notes
   if (confirmDel == true) {
-    if (notes == null) { // not sure this is needed? notes can not be null as this would mean the local storage would be empty and so the html markup containing the delete note button would not be rendered to the DOM.
+    if (notes == null || progNotes  == null) { // not sure this is needed? notes can not be null as this would mean the local storage would be empty and so the html markup containing the delete note button would not be rendered to the DOM.
       notesObj = [];
+      progNotesObj = [];
     } else {
       notesObj = JSON.parse(notes);
+      progNotesObj = JSON.parse(progNotes);
     }
     notesObj.splice(index, 1); // this means start from the first number defined by the parameter index position. 1 = delete one item.
+    progNotesObj.splice(index, 1); 
     localStorage.setItem("notes", JSON.stringify(notesObj)); // take the remaining notes items in notesObj and save it back to local storage.
+    localStorage.setItem("notes-progress", JSON.stringify(progNotesObj));
     showNote(); // re-display updated notes
+    showProgNote();
   }
 }
 
@@ -100,6 +107,7 @@ function handlePush(index) {
   let notesProgObj = [];
   notesProgObj = JSON.parse(notesProg);
   // console.log(notesProgObj);
+
   let progHtml = '';
   progHtml += `
             <div class="card col align-items-start my-2 mx-0 noteCard w-33 bg-yellow">
@@ -127,7 +135,48 @@ function handlePush(index) {
   transferProgObj.push(progNotesObj);
   // console.log(progNotesObj);
   localStorage.setItem("notes-progress", JSON.stringify(transferProgObj));
+  deleteNote(index);
+  showProgNote();
 }
+
+//////
+
+function showProgNote() {
+  let notesProgress = localStorage.getItem("notes-progress");
+  
+  if (notesProgress == null) {
+    notesProgObj = [];
+  } else {
+    notesProgObj = JSON.parse(notesProgress);
+    console.log(notesProgObj);
+  }
+
+  let progHtml = "";
+
+  notesProgObj.forEach(function (element, index) {
+    console.log(element);
+    console.log(index);
+    progHtml += `
+    <div class="card col align-items-start my-2 mx-0 noteCard w-33 bg-yellow">
+    <div class="card-body">
+        <h5 id="card-progress-title" class="card-title">${element.title}</h5>
+        <p class="card-text">${element.text}</p>
+        <button id="${index}" class="btn btn-success" onclick="handleComplete(this.id)">Push to Completion</button>
+        <button id=" ${index}" class="btn btn-danger" onclick="deleteNote(this.id)">Delete Note</button>
+    </div>
+</div>
+            `;
+  });
+  let notesProgElm = document.getElementById('notes-progress')
+  if (notesProgress.length != 0) {
+    console.log(notesProgElm.length)
+    notesProgElm.innerHTML = `<h3 id="in-progress-heading" class="mx-2 text-center">In Progress</h3>${progHtml}`;
+  } else {
+    notesProgElm.innerHTML = "Nothing to show at this point";
+  }
+}
+
+showProgNote();
 
 ///// SEARCH BAR //////
 
